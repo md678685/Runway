@@ -1,3 +1,4 @@
+<#-- @ftlvariable name="username" type="java.lang.String" -->
 <#import "/spring.ftl" as spring />
 <#import "*/layout/base.ftlh" as base />
 
