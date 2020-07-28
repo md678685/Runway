@@ -1,15 +1,17 @@
 package io.github.md678685.runway.service;
 
-import io.github.md678685.runway.db.entity.User;
-import io.github.md678685.runway.db.repository.UserRepository;
+import io.github.md678685.runway.model.User;
+import io.github.md678685.runway.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Set;
 
 @Service
@@ -37,7 +39,15 @@ public class RunwayUserDetailsService implements UserDetailsService {
 
         @Override
         public Collection<? extends GrantedAuthority> getAuthorities() {
-            return Set.of();
+            Set<SimpleGrantedAuthority> authorities = new HashSet<>();
+            authorities.add(getRole("USER"));
+            if (user.isAdmin()) {
+                authorities.add(getRole("ADMIN"));
+            }
+            if (user.isStaff()) {
+                authorities.add(getRole("STAFF"));
+            }
+            return Set.copyOf(authorities);
         }
 
         @Override
@@ -68,6 +78,10 @@ public class RunwayUserDetailsService implements UserDetailsService {
         @Override
         public boolean isEnabled() {
             return user.isActive();
+        }
+
+        private SimpleGrantedAuthority getRole(String name) {
+            return new SimpleGrantedAuthority("ROLE_" + name);
         }
     }
 }

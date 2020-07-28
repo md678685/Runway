@@ -1,9 +1,9 @@
-package io.github.md678685.runway.db.entity;
+package io.github.md678685.runway.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "accounts_avatar")
+@Table(name = "user_avatars")
 public class UserAvatar {
 
     @Id

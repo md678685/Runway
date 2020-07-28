@@ -1,10 +1,10 @@
-package io.github.md678685.runway.db.entity;
+package io.github.md678685.runway.model;
 
 import javax.persistence.*;
 
 @Entity
-@Table(name = "accounts_users")
-public class User {
+@Table(name = "users")
+public class UserProfile {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -13,12 +13,8 @@ public class User {
     @Column(nullable = false, unique = true)
     private String username;
 
-    private String password;
-
     @Column(nullable = false, unique = true)
     private String email;
-
-    private boolean emailVerified;
 
     private boolean isActive;
 
@@ -40,8 +36,6 @@ public class User {
     @OneToOne
     @JoinColumn(name = "current_avatar_id")
     private UserAvatar avatar;
-
-    private boolean twofaEnabled;
 
     public Long getId() {
         return id;
@@ -65,14 +59,6 @@ public class User {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public boolean isEmailVerified() {
-        return emailVerified;
-    }
-
-    public void setEmailVerified(boolean emailVerified) {
-        this.emailVerified = emailVerified;
     }
 
     public boolean isActive() {
@@ -137,21 +123,5 @@ public class User {
 
     public void setAvatar(UserAvatar avatar) {
         this.avatar = avatar;
-    }
-
-    public boolean isTwofaEnabled() {
-        return twofaEnabled;
-    }
-
-    public void setTwofaEnabled(boolean twofaEnabled) {
-        this.twofaEnabled = twofaEnabled;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }
