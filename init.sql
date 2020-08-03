@@ -40,3 +40,28 @@ alter table user_avatars
 
 alter table users
     add constraint users_current_avatar_id_fkey foreign key (current_avatar_id) references user_avatars on delete set null;
+
+create table groups
+(
+    id            bigint      not null
+        constraint groups_pkey primary key,
+    display_name  varchar(80) not null,
+    external_name varchar(20),
+    internal_only boolean
+);
+
+alter table groups
+    owner to root;
+
+create table user_groups
+(
+    id       bigint not null
+        constraint user_groups_pkey primary key,
+    user_id  bigint
+        constraint user_groups_user_id_fkey references users on delete cascade,
+    group_id bigint
+        constraint user_groups_group_id_fkey references groups on delete cascade
+);
+
+alter table user_groups
+    owner to root;
